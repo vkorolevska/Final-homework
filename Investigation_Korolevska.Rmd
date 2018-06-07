@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+
+
+```{r}
+library(ggplot2)
+library(ggthemes)
+```
+Прочитаємо дані
+```{r}
+df <- read.csv('transactions.csv')
+head(df)
+```
+Конвертуємо дати в об'єкти
+```{r}
+df$trans_date <- as.Date(df$trans_date, format = "%Y-%m-%d")
+```
+ПОдивимось розподіл витрат
+```{r}
+ggplot(df, aes(x = format(df$trans_date,"%m"), y = amount)) + 
+  geom_bar(stat = "identity", fill = "red") +
+  labs(x = "month", y = "money spend") +
+  theme_wsj()
+```
+Цікаво, найбільше транзакцій в останній місяць
+Подивимось, розподіл по днях місяця
+```{r}
+ggplot(df, aes(x = format(df$trans_date," %d"), y = amount)) + 
+  geom_bar(stat = "identity", fill = "red") +
+  labs(x = "month", y = "money spend") +
+  theme(text=element_text(family="Trebuchet MS"))
+```
+
